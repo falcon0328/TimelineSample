@@ -42,14 +42,24 @@ class ViewController: UIViewController {
     func fetchQiitaTags() {
         qiitaTagDataStore.fetchTags(page: 1, perPage: 100, sort: .count)
     }
+    
+    func cancelLoadingTagImageIfNeed(indexPath: IndexPath) {
+        guard let dataLoader = qiitaTagImageLoadingOperations[indexPath] else { return }
+        dataLoader.cancel()
+        qiitaTagImageLoadingOperations.removeValue(forKey: indexPath)
+    }
 }
 
 extension ViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: UIScreen.main.bounds.size.width, height: ViewController.cellHeight)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
 }
@@ -68,12 +78,7 @@ extension ViewController: UICollectionViewDataSourcePrefetching {
     }
     
     func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
-        for indexPath in indexPaths {
-            if let dataLoader = qiitaTagImageLoadingOperations[indexPath] {
-                dataLoader.cancel()
-                qiitaTagImageLoadingOperations.removeValue(forKey: indexPath)
-            }
-        }
+        for indexPath in indexPaths { cancelLoadingTagImageIfNeed(indexPath: indexPath) }
     }
 }
 
@@ -120,7 +125,9 @@ extension ViewController: UICollectionViewDataSource {
         return 1
     }
     
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView,
+                        willDisplay cell: UICollectionViewCell,
+                        forItemAt indexPath: IndexPath) {
         guard let cell = cell as? QiitaTagCellCollectionViewCell else { return }
         let updateCellClosure: (UIImage?, Error?) -> () = { image, error in
             DispatchQueue.main.async { [weak self] in
@@ -145,11 +152,10 @@ extension ViewController: UICollectionViewDataSource {
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if let dataLoader = qiitaTagImageLoadingOperations[indexPath] {
-            dataLoader.cancel()
-            qiitaTagImageLoadingOperations.removeValue(forKey: indexPath)
-        }
+    func collectionView(_ collectionView: UICollectionView,
+                        didEndDisplaying cell: UICollectionViewCell,
+                        forItemAt indexPath: IndexPath) {
+        cancelLoadingTagImageIfNeed(indexPath: indexPath)
     }
 }
 
