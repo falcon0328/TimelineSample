@@ -17,6 +17,8 @@
 		900EDD7724A8EEEF00F859BD /* TimelineSampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900EDD7624A8EEEF00F859BD /* TimelineSampleUITests.swift */; };
 		900EDD8524A8EF7200F859BD /* QiitaAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900EDD8424A8EF7200F859BD /* QiitaAPIClient.swift */; };
 		900EDD8824A8EFA700F859BD /* QiitaTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900EDD8724A8EFA700F859BD /* QiitaTag.swift */; };
+		900EDD8A24AE2ED000F859BD /* QiitaTagCellCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900EDD8924AE2ED000F859BD /* QiitaTagCellCollectionViewCell.swift */; };
+		900EDD8C24B1770B00F859BD /* QiitaTagDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900EDD8B24B1770B00F859BD /* QiitaTagDataStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,8 @@
 		900EDD7824A8EEEF00F859BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		900EDD8424A8EF7200F859BD /* QiitaAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QiitaAPIClient.swift; sourceTree = "<group>"; };
 		900EDD8724A8EFA700F859BD /* QiitaTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QiitaTag.swift; sourceTree = "<group>"; };
+		900EDD8924AE2ED000F859BD /* QiitaTagCellCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QiitaTagCellCollectionViewCell.swift; sourceTree = "<group>"; };
+		900EDD8B24B1770B00F859BD /* QiitaTagDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QiitaTagDataStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +115,7 @@
 				900EDD5D24A8EEEF00F859BD /* Assets.xcassets */,
 				900EDD5F24A8EEEF00F859BD /* LaunchScreen.storyboard */,
 				900EDD6224A8EEEF00F859BD /* Info.plist */,
+				900EDD8924AE2ED000F859BD /* QiitaTagCellCollectionViewCell.swift */,
 			);
 			path = TimelineSample;
 			sourceTree = "<group>";
@@ -138,6 +143,7 @@
 			children = (
 				900EDD8424A8EF7200F859BD /* QiitaAPIClient.swift */,
 				900EDD8724A8EFA700F859BD /* QiitaTag.swift */,
+				900EDD8B24B1770B00F859BD /* QiitaTagDataStore.swift */,
 			);
 			path = APIClient;
 			sourceTree = "<group>";
@@ -275,6 +281,8 @@
 			files = (
 				900EDD8524A8EF7200F859BD /* QiitaAPIClient.swift in Sources */,
 				900EDD5924A8EEEC00F859BD /* ViewController.swift in Sources */,
+				900EDD8A24AE2ED000F859BD /* QiitaTagCellCollectionViewCell.swift in Sources */,
+				900EDD8C24B1770B00F859BD /* QiitaTagDataStore.swift in Sources */,
 				900EDD8824A8EFA700F859BD /* QiitaTag.swift in Sources */,
 				900EDD5524A8EEEC00F859BD /* AppDelegate.swift in Sources */,
 				900EDD5724A8EEEC00F859BD /* SceneDelegate.swift in Sources */,

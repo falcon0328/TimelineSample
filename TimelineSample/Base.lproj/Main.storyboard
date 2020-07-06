@@ -16,34 +16,74 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="nZq-5V-dqu">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="nZq-5V-dqu">
                                 <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="e1L-mA-Nxp">
-                                    <size key="itemSize" width="128" height="128"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="e1L-mA-Nxp">
+                                    <size key="itemSize" width="375" height="99"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="jy0-S0-ctR">
-                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="qiitaTagCell" id="jy0-S0-ctR" customClass="QiitaTagCellCollectionViewCell" customModule="TimelineSample" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="88"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="kFn-nO-J5i">
-                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="88"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="94m-UO-SGi">
+                                                    <rect key="frame" x="8" y="12" width="64" height="64"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="64" id="Ain-bk-bs5"/>
+                                                        <constraint firstAttribute="width" constant="64" id="dqz-rM-nWm"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Qiitaのタグ名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ihk-Oi-Dam">
+                                                    <rect key="frame" x="80" y="34" width="200" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="xms-Q3-XB2"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="999999999" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mem-23-DOr">
+                                                    <rect key="frame" x="288" y="35.5" width="79" height="17"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="17" id="ByM-da-KBd"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="ihk-Oi-Dam" secondAttribute="bottom" constant="34" id="2xu-ME-U13"/>
+                                                <constraint firstAttribute="trailing" secondItem="Mem-23-DOr" secondAttribute="trailing" constant="8" id="400-26-yQp"/>
+                                                <constraint firstAttribute="bottom" secondItem="Mem-23-DOr" secondAttribute="bottom" constant="35.5" id="603-AI-Wr1"/>
+                                                <constraint firstItem="Mem-23-DOr" firstAttribute="top" secondItem="kFn-nO-J5i" secondAttribute="top" constant="35.5" id="AQu-es-Ykw"/>
+                                                <constraint firstItem="ihk-Oi-Dam" firstAttribute="leading" secondItem="94m-UO-SGi" secondAttribute="trailing" constant="8" id="JRA-IE-pzF"/>
+                                                <constraint firstItem="Mem-23-DOr" firstAttribute="leading" secondItem="ihk-Oi-Dam" secondAttribute="trailing" constant="8" id="gG9-UF-HR9"/>
+                                                <constraint firstItem="94m-UO-SGi" firstAttribute="centerY" secondItem="kFn-nO-J5i" secondAttribute="centerY" id="mfn-ls-lBY"/>
+                                                <constraint firstItem="94m-UO-SGi" firstAttribute="leading" secondItem="kFn-nO-J5i" secondAttribute="leading" constant="8" id="oBn-D6-AIn"/>
+                                                <constraint firstItem="ihk-Oi-Dam" firstAttribute="top" secondItem="kFn-nO-J5i" secondAttribute="top" constant="34" id="op9-P0-VKI"/>
+                                            </constraints>
                                         </collectionViewCellContentView>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                                        <size key="customSize" width="375" height="88"/>
+                                        <connections>
+                                            <outlet property="followersLabel" destination="Mem-23-DOr" id="XY0-Gu-dmK"/>
+                                            <outlet property="iconImageView" destination="94m-UO-SGi" id="Ed5-kQ-H5b"/>
+                                            <outlet property="idLabel" destination="ihk-Oi-Dam" id="dPi-Cf-YGY"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstItem="nZq-5V-dqu" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="4ak-Da-dpB"/>
-                            <constraint firstItem="nZq-5V-dqu" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="4dS-zX-MMV"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="nZq-5V-dqu" secondAttribute="trailing" id="MJU-aF-7ev"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="nZq-5V-dqu" secondAttribute="bottom" id="ed3-lb-LJv"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="6S0-yu-oq4">
@@ -59,7 +99,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="575" y="45"/>
+            <point key="canvasLocation" x="573.60000000000002" y="44.527736131934034"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="vaS-pX-kg0">
