@@ -105,7 +105,7 @@ extension ViewController: UICollectionViewDataSource {
         let updateCellClosure: (UIImage?, Error?) -> () = { image, error in
             DispatchQueue.main.async { [weak self] in
                 guard let self = self, let image = image else { return }
-                cell.iconImageView.image = image
+                cell.updateAppearance(icon: image)
                 self.qiitaTagImageLoadingOperations.removeValue(forKey: indexPath)
             }
         }
@@ -123,9 +123,7 @@ extension ViewController: UICollectionViewDataSource {
                 qiitaTagImageLoadingOperations[indexPath] = operation
             }
         }
-        
-        cell.idLabel.text = tag.id
-        cell.followersLabel.text = "\(tag.followers_count)"
+        cell.updateAppearance(id: tag.id, followers: "\(tag.followers_count)", icon: nil)
         return cell
     }
     

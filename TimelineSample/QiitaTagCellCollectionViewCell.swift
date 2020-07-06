@@ -19,4 +19,14 @@ class QiitaTagCellCollectionViewCell: UICollectionViewCell {
         idLabel.text = nil
         followersLabel.text = nil
     }
+    
+    func updateAppearance(icon: UIImage?) {
+        iconImageView.image = icon
+    }
+    
+    func updateAppearance(id: String, followers: String, icon: UIImage?) {
+        idLabel.text = id
+        followersLabel.text = followers
+        updateAppearance(icon: icon)
+    }
 }
