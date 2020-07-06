@@ -99,7 +99,7 @@ extension ViewController: UICollectionViewDataSource {
         }
         
         let tag = qiitaTags[indexPath.row]
-        cell.layer.borderWidth = 0.1
+        cell.layer.borderWidth = 0.25
         cell.layer.borderColor = UIColor.black.cgColor
         
         let updateCellClosure: (UIImage?, Error?) -> () = { image, error in
