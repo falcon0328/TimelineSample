@@ -13,6 +13,12 @@ class QiitaTagCellCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var followersLabel: UILabel!
     
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        self.layer.borderWidth = 0.25
+        self.layer.borderColor = UIColor.black.cgColor
+    }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         iconImageView.image = nil

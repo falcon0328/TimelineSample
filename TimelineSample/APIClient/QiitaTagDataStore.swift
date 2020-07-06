@@ -22,6 +22,11 @@ class QiitaTagDataStore {
     
     weak var delegate: QiitaTagDataStoreDelegate?
     
+    func tagAt(index: Int) -> QiitaTag? {
+        guard !tags.isEmpty && index >= 0 && index < tags.count else { return nil }
+        return tags[index]
+    }
+    
     func fetchTags(page: Int = 1, perPage: Int, sort: QiitaAPIClient.QiitaAPISortType) {
         guard !isLoading else { return }
         qiitaAPIClient.delegate = self
@@ -29,7 +34,7 @@ class QiitaTagDataStore {
     }
     
     func loadTagImage(index: Int, tagImageURL: URL) -> QiitaTagImageOperation? {
-        guard index >= 0 && index < tags.count else { return .none }
+        guard !tags.isEmpty && index >= 0 && index < tags.count else { return .none }
         return QiitaTagImageOperation(tagImageURL: tagImageURL)
     }
 }

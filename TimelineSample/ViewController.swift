@@ -43,7 +43,25 @@ class ViewController: UIViewController {
         qiitaTagDataStore.fetchTags(page: 1, perPage: 100, sort: .count)
     }
     
-    func cancelLoadingTagImageIfNeed(indexPath: IndexPath) {
+    func startOperationLoadingTagImageIfNeed(indexPath: IndexPath,
+                                             completionHandler: @escaping (UIImage?, Error?) -> Void) {
+        guard let tag = qiitaTagDataStore.tagAt(index: indexPath.item) else { return }
+        if let dataLoader = qiitaTagImageLoadingOperations[indexPath] {
+            if let tagImage = dataLoader.tagImage {
+                completionHandler(tagImage, nil)
+            } else {
+                dataLoader.completionHandler = completionHandler
+            }
+        } else {
+            if let tagImageURL = URL(string: tag.icon_url),
+                let operation = qiitaTagDataStore.loadTagImage(index: indexPath.item, tagImageURL: tagImageURL) {
+                qiitaTagImageLoadingOperationQueue.addOperation(operation)
+                qiitaTagImageLoadingOperations[indexPath] = operation
+            }
+        }
+    }
+    
+    func cancelOperationLoadingTagImageIfNeed(indexPath: IndexPath) {
         guard let dataLoader = qiitaTagImageLoadingOperations[indexPath] else { return }
         dataLoader.cancel()
         qiitaTagImageLoadingOperations.removeValue(forKey: indexPath)
@@ -78,7 +96,7 @@ extension ViewController: UICollectionViewDataSourcePrefetching {
     }
     
     func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
-        for indexPath in indexPaths { cancelLoadingTagImageIfNeed(indexPath: indexPath) }
+        for indexPath in indexPaths { cancelOperationLoadingTagImageIfNeed(indexPath: indexPath) }
     }
 }
 
@@ -88,36 +106,19 @@ extension ViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ViewController.tagCellIdentifier,
+        guard let tag = qiitaTagDataStore.tagAt(index: indexPath.item),
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ViewController.tagCellIdentifier,
                                                             for: indexPath) as? QiitaTagCellCollectionViewCell else {
             return UICollectionViewCell()
-        }
-        
-        let tag =  qiitaTagDataStore.tags[indexPath.row]
-        cell.layer.borderWidth = 0.25
-        cell.layer.borderColor = UIColor.black.cgColor
-        
-        let updateCellClosure: (UIImage?, Error?) -> () = { image, error in
+        }        
+        cell.updateAppearance(id: tag.id, followers: "\(tag.followers_count)", icon: nil)
+        startOperationLoadingTagImageIfNeed(indexPath: indexPath) { (image, error) in
             DispatchQueue.main.async { [weak self] in
                 guard let self = self, let image = image else { return }
                 cell.updateAppearance(icon: image)
                 self.qiitaTagImageLoadingOperations.removeValue(forKey: indexPath)
             }
         }
-        if let dataLoader = qiitaTagImageLoadingOperations[indexPath] {
-            if let tagImage = dataLoader.tagImage {
-                updateCellClosure(tagImage, nil)
-            } else {
-                dataLoader.completionHandler = updateCellClosure
-            }
-        } else {
-            if let tagImageURL = URL(string: tag.icon_url),
-                let operation = qiitaTagDataStore.loadTagImage(index: indexPath.item, tagImageURL: tagImageURL) {
-                qiitaTagImageLoadingOperationQueue.addOperation(operation)
-                qiitaTagImageLoadingOperations[indexPath] = operation
-            }
-        }
-        cell.updateAppearance(id: tag.id, followers: "\(tag.followers_count)", icon: nil)
         return cell
     }
     
@@ -129,25 +130,11 @@ extension ViewController: UICollectionViewDataSource {
                         willDisplay cell: UICollectionViewCell,
                         forItemAt indexPath: IndexPath) {
         guard let cell = cell as? QiitaTagCellCollectionViewCell else { return }
-        let updateCellClosure: (UIImage?, Error?) -> () = { image, error in
+        startOperationLoadingTagImageIfNeed(indexPath: indexPath) { (image, error) in
             DispatchQueue.main.async { [weak self] in
                 guard let self = self, let image = image else { return }
-                cell.iconImageView.image = image
+                cell.updateAppearance(icon: image)
                 self.qiitaTagImageLoadingOperations.removeValue(forKey: indexPath)
-            }
-        }
-        if let dataLoader = qiitaTagImageLoadingOperations[indexPath] {
-            if let tagImage = dataLoader.tagImage {
-                updateCellClosure(tagImage, nil)
-            } else {
-                dataLoader.completionHandler = updateCellClosure
-            }
-        } else {
-            let tag = qiitaTagDataStore.tags[indexPath.row]
-            if let tagImageURL = URL(string: tag.icon_url),
-                let operation = qiitaTagDataStore.loadTagImage(index: indexPath.item, tagImageURL: tagImageURL) {
-                qiitaTagImageLoadingOperationQueue.addOperation(operation)
-                qiitaTagImageLoadingOperations[indexPath] = operation
             }
         }
     }
@@ -155,7 +142,7 @@ extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         didEndDisplaying cell: UICollectionViewCell,
                         forItemAt indexPath: IndexPath) {
-        cancelLoadingTagImageIfNeed(indexPath: indexPath)
+        cancelOperationLoadingTagImageIfNeed(indexPath: indexPath)
     }
 }
 
