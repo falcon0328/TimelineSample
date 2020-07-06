@@ -34,6 +34,12 @@ class ViewController: UIViewController {
         collectionView.prefetchDataSource = self
         fetchQiitaTags()
     }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        collectionView.collectionViewLayout.invalidateLayout()
+        collectionView.reloadData()
+    }
 
     @IBAction func refreshButtonDidTap(_ sender: Any) {
         fetchQiitaTags()
