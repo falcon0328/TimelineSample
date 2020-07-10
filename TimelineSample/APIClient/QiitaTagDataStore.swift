@@ -27,8 +27,9 @@ class QiitaTagDataStore {
         return tags[index]
     }
     
-    func fetchTags(page: Int = 1, perPage: Int, sort: QiitaAPIClient.QiitaAPISortType) {
+    func fetchTags(perPage: Int, sort: QiitaAPIClient.QiitaAPISortType) {
         guard !isLoading else { return }
+        isLoading = true
         qiitaAPIClient.delegate = self
         qiitaAPIClient.fetchQiitaTags(page: page, perPage: perPage, sort: sort)
     }
