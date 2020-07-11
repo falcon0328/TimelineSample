@@ -10,9 +10,10 @@ import UIKit
 
 class ViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
+    let refreshControl = UIRefreshControl()
+    var footerLoadingView: QiitaTagFooterCollectionReusableView?
+    
     static let tagCellIdentifier = "qiitaTagCell"
-    /// 保存するデータ数の最大値
-    static let maxDataCount = 1000
     static let cellHeight: CGFloat = 88.0
     
     let qiitaTagDataStore = QiitaTagDataStore()
@@ -26,7 +27,16 @@ class ViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.prefetchDataSource = self
+        collectionView.refreshControl = refreshControl
+        refreshControl.attributedTitle = NSAttributedString(string: "Qiita tag updating ...")
+        refreshControl.addTarget(self, action: #selector(refresh(sender:)), for: .valueChanged)
         fetchQiitaTags()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        footerViewStopAnimationIfNeed()
+        footerLoadingView = nil
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -39,8 +49,11 @@ class ViewController: UIViewController {
         fetchQiitaTags()
     }
     
+    @objc func refresh(sender: UIRefreshControl) {
+    }
+    
     func fetchQiitaTags() {
-        qiitaTagDataStore.fetchTags(page: 1, perPage: 100, sort: .count)
+        qiitaTagDataStore.fetchTags(perPage: 20, sort: .count)
     }
     
     func startOperationLoadingTagImageIfNeed(indexPath: IndexPath,
@@ -66,13 +79,37 @@ class ViewController: UIViewController {
         dataLoader.cancel()
         qiitaTagImageLoadingOperations.removeValue(forKey: indexPath)
     }
+    
+    func footerViewStartAnimationIfNeed() {
+        guard let footerView = self.footerLoadingView else {
+            return
+        }
+        footerView.activityIndicator.startAnimating()
+    }
+    
+    func footerViewStopAnimationIfNeed() {
+        guard let footerView = self.footerLoadingView else {
+            return
+        }
+        footerView.activityIndicator.stopAnimating()
+    }
 }
 
 extension ViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: UIScreen.main.bounds.size.width, height: ViewController.cellHeight)
+        return CGSize(width: collectionView.frame.size.width, height: ViewController.cellHeight)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        referenceSizeForFooterInSection section: Int) -> CGSize {
+        if qiitaTagDataStore.isLoading {
+            return CGSize.zero
+        } else {
+            return CGSize(width: collectionView.bounds.width, height: 50.0)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -144,11 +181,39 @@ extension ViewController: UICollectionViewDataSource {
                         forItemAt indexPath: IndexPath) {
         cancelOperationLoadingTagImageIfNeed(indexPath: indexPath)
     }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        viewForSupplementaryElementOfKind kind: String,
+                        at indexPath: IndexPath) -> UICollectionReusableView {
+        guard kind == UICollectionView.elementKindSectionFooter,
+            let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "timelineFooter", for: indexPath) as? QiitaTagFooterCollectionReusableView else {
+            return UICollectionReusableView()
+        }
+        footerView.activityIndicator.hidesWhenStopped = true
+        footerView.activityIndicator.stopAnimating()
+        self.footerLoadingView = footerView
+        return footerView
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        willDisplaySupplementaryView view: UICollectionReusableView,
+                        forElementKind elementKind: String,
+                        at indexPath: IndexPath) {
+        footerViewStartAnimationIfNeed()
+        fetchQiitaTags()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didEndDisplayingSupplementaryView view: UICollectionReusableView, forElementOfKind elementKind: String, at indexPath: IndexPath) {
+        footerViewStopAnimationIfNeed()
+    }
 }
 
 extension ViewController: QiitaTagDataStoreDelegate {
     func qiitaTagDataStore(_: QiitaTagDataStore, didReceiveTags tags: [QiitaTag]) {
+        refreshControl.endRefreshing()
         collectionView.reloadData()
+        footerViewStopAnimationIfNeed()
+        footerLoadingView = nil
     }
     
     func qiitaTagDataStore(_: QiitaTagDataStore, didInvalidReceiveTagWithError error: Error) {}
