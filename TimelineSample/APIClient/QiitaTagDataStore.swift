@@ -16,9 +16,9 @@ protocol QiitaTagDataStoreDelegate: class {
 
 class QiitaTagDataStore {
     let qiitaAPIClient = QiitaAPIClient()
-    var tags: [QiitaTag] = []
-    var page: Int = 1
-    var isLoading: Bool = false
+    private(set) var tags: [QiitaTag] = []
+    private(set) var page: Int = 1
+    private(set) var isLoading: Bool = false
     private(set) var isReset = false
     
     weak var delegate: QiitaTagDataStoreDelegate?
