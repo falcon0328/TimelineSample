@@ -29,7 +29,6 @@ class ViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.prefetchDataSource = self
         collectionView.refreshControl = refreshControl
-        refreshControl.attributedTitle = NSAttributedString(string: "Qiita tag updating ...")
         refreshControl.addTarget(self, action: #selector(refresh(sender:)), for: .valueChanged)
         fetchQiitaTags()
     }
