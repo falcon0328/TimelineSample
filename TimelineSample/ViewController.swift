@@ -157,7 +157,12 @@ extension ViewController: UICollectionViewDataSource {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ViewController.tagCellIdentifier,
                                                             for: indexPath) as? QiitaTagCellCollectionViewCell else {
             return UICollectionViewCell()
-        }        
+        }
+
+        let selectedBackgroundView = UIView(frame: cell.frame)
+        selectedBackgroundView.backgroundColor = UIColor.tertiaryLabel
+        cell.selectedBackgroundView = selectedBackgroundView
+    
         cell.updateAppearance(indexPath: indexPath, id: tag.id, followers: "\(tag.followers_count)", icon: nil)
         startOperationLoadingTagImageIfNeed(indexPath: indexPath) { (image, error) in
             DispatchQueue.main.async { [weak self] in
