@@ -16,7 +16,7 @@ class QiitaTagCellCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         self.layer.borderWidth = 0.25
-        self.layer.borderColor = UIColor.black.cgColor
+        self.layer.borderColor = UIColor.tertiaryLabel.cgColor
     }
     
     override func prepareForReuse() {
