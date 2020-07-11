@@ -30,8 +30,8 @@ class QiitaTagCellCollectionViewCell: UICollectionViewCell {
         iconImageView.image = icon
     }
     
-    func updateAppearance(id: String, followers: String, icon: UIImage?) {
-        idLabel.text = id
+    func updateAppearance(indexPath: IndexPath, id: String, followers: String, icon: UIImage?) {
+        idLabel.text = "\(indexPath.item + 1) " + id
         followersLabel.text = followers
         updateAppearance(icon: icon)
     }

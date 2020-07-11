@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     let refreshControl = UIRefreshControl()
     var footerLoadingView: QiitaTagFooterCollectionReusableView?
     
+    static let perPage = 20
     static let tagCellIdentifier = "qiitaTagCell"
     static let cellHeight: CGFloat = 88.0
     
@@ -46,14 +47,24 @@ class ViewController: UIViewController {
     }
 
     @IBAction func refreshButtonDidTap(_ sender: Any) {
-        fetchQiitaTags()
+        refreshQiitaTags()
     }
     
     @objc func refresh(sender: UIRefreshControl) {
+        refreshQiitaTags()
     }
     
-    func fetchQiitaTags() {
-        qiitaTagDataStore.fetchTags(perPage: 20, sort: .count)
+    func refreshQiitaTags(perPage: Int = ViewController.perPage * 2) {
+        qiitaTagImageLoadingOperationQueue.cancelAllOperations()
+        qiitaTagImageLoadingOperations.forEach { (key, qiitaTagImageLoadingOperation) in
+            qiitaTagImageLoadingOperation.cancel()
+        }
+        qiitaTagImageLoadingOperations = [:]
+        qiitaTagDataStore.fetchTags(page: 1, perPage: perPage, sort: .count, isReset: true)
+    }
+    
+    func fetchQiitaTags(perPage: Int = ViewController.perPage) {
+        qiitaTagDataStore.fetchTags(perPage: perPage, sort: .count)
     }
     
     func startOperationLoadingTagImageIfNeed(indexPath: IndexPath,
@@ -122,8 +133,8 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
 extension ViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         for indexPath in indexPaths {
+            guard let tag = qiitaTagDataStore.tagAt(index: indexPath.item) else { continue }
             guard qiitaTagImageLoadingOperations[indexPath] == nil else { continue }
-            let tag =  qiitaTagDataStore.tags[indexPath.row]
             if let tagImageURL = URL(string: tag.icon_url),
                 let operation = qiitaTagDataStore.loadTagImage(index: indexPath.item, tagImageURL: tagImageURL) {
                 qiitaTagImageLoadingOperationQueue.addOperation(operation)
@@ -148,7 +159,7 @@ extension ViewController: UICollectionViewDataSource {
                                                             for: indexPath) as? QiitaTagCellCollectionViewCell else {
             return UICollectionViewCell()
         }        
-        cell.updateAppearance(id: tag.id, followers: "\(tag.followers_count)", icon: nil)
+        cell.updateAppearance(indexPath: indexPath, id: tag.id, followers: "\(tag.followers_count)", icon: nil)
         startOperationLoadingTagImageIfNeed(indexPath: indexPath) { (image, error) in
             DispatchQueue.main.async { [weak self] in
                 guard let self = self, let image = image else { return }

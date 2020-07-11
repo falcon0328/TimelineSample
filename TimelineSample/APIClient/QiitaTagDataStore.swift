@@ -19,6 +19,7 @@ class QiitaTagDataStore {
     var tags: [QiitaTag] = []
     var page: Int = 1
     var isLoading: Bool = false
+    private(set) var isReset = false
     
     weak var delegate: QiitaTagDataStoreDelegate?
     
@@ -27,11 +28,17 @@ class QiitaTagDataStore {
         return tags[index]
     }
     
-    func fetchTags(perPage: Int, sort: QiitaAPIClient.QiitaAPISortType) {
+    func fetchTags(page: Int, perPage: Int, sort: QiitaAPIClient.QiitaAPISortType, isReset: Bool = false) {
         guard !isLoading else { return }
         isLoading = true
         qiitaAPIClient.delegate = self
+        self.page = page
+        self.isReset = isReset
         qiitaAPIClient.fetchQiitaTags(page: page, perPage: perPage, sort: sort)
+    }
+    
+    func fetchTags(perPage: Int, sort: QiitaAPIClient.QiitaAPISortType, isReset: Bool = false) {
+        fetchTags(page: page, perPage: perPage, sort: sort, isReset: isReset)
     }
     
     func loadTagImage(index: Int, tagImageURL: URL) -> QiitaTagImageOperation? {
@@ -46,7 +53,11 @@ extension QiitaTagDataStore: QiitaAPIClientDelegate {
         DispatchQueue.main.async { [weak self] in
             guard let sself = self else { return }
             sself.page += 1
-            sself.tags += tags
+            if sself.isReset {
+                sself.tags = tags
+            } else {
+                sself.tags += tags
+            }
             sself.delegate?.qiitaTagDataStore(sself, didReceiveTags: sself.tags)
         }
     }
