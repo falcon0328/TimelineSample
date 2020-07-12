@@ -15,8 +15,7 @@ class QiitaTagCellCollectionViewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        self.layer.borderWidth = 0.25
-        self.layer.borderColor = UIColor.tertiaryLabel.cgColor
+        updateBorderAppearance()
     }
     
     override func prepareForReuse() {
@@ -24,6 +23,11 @@ class QiitaTagCellCollectionViewCell: UICollectionViewCell {
         iconImageView.image = nil
         idLabel.text = nil
         followersLabel.text = nil
+    }
+    
+    func updateBorderAppearance(borderWidth: CGFloat = 0.25, borderColor: CGColor = UIColor.tertiaryLabel.cgColor) {
+        self.layer.borderWidth = borderWidth
+        self.layer.borderColor = borderColor
     }
     
     func updateAppearance(icon: UIImage?) {

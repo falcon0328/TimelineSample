@@ -41,8 +41,13 @@ class ViewController: UIViewController {
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        collectionView.collectionViewLayout.invalidateLayout()
-        collectionView.reloadData()
+        reloadCollectionVIewLayoutAndData()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            reloadCollectionVIewLayoutAndData()
+        }
     }
 
     @IBAction func refreshButtonDidTap(_ sender: Any) {
@@ -102,6 +107,11 @@ class ViewController: UIViewController {
             return
         }
         footerView.activityIndicator.stopAnimating()
+    }
+    
+    func reloadCollectionVIewLayoutAndData() {
+        collectionView.collectionViewLayout.invalidateLayout()
+        collectionView.reloadData()
     }
 }
 
@@ -163,6 +173,7 @@ extension ViewController: UICollectionViewDataSource {
         selectedBackgroundView.backgroundColor = UIColor.tertiaryLabel
         cell.selectedBackgroundView = selectedBackgroundView
     
+        cell.updateBorderAppearance()
         cell.updateAppearance(indexPath: indexPath, id: tag.id, followers: "\(tag.followers_count)", icon: nil)
         startOperationLoadingTagImageIfNeed(indexPath: indexPath) { (image, error) in
             DispatchQueue.main.async { [weak self] in
