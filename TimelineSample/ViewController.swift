@@ -16,7 +16,10 @@ class ViewController: UIViewController {
     static let perPage = 20
     static let tagCellIdentifier = "qiitaTagCell"
     static let cellHeight: CGFloat = 88.0
+    static let detailSegueIdentifier = "detailSegue"
     
+    private(set) var selectedQiitaTag: QiitaTag?
+    private(set) var isFromDetailVC: Bool = false
     let qiitaTagDataStore = QiitaTagDataStore()
     let qiitaTagImageLoadingOperationQueue = OperationQueue()
     var qiitaTagImageLoadingOperations: [IndexPath: QiitaTagImageOperation] = [:]
@@ -33,10 +36,20 @@ class ViewController: UIViewController {
         fetchQiitaTags()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if isFromDetailVC {
+            collectionView.reloadData()
+            isFromDetailVC = false
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        cancelAllOperationLoadingTagImageIfNeed()
         footerViewStopAnimationIfNeed()
         footerLoadingView = nil
+        selectedQiitaTag = nil
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -47,6 +60,13 @@ class ViewController: UIViewController {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             reloadCollectionVIewLayoutAndData()
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let detailVC = segue.destination as? QiitaTagDetailViewController, let selectedQiitaTag = selectedQiitaTag {
+            detailVC.tag = selectedQiitaTag
+            isFromDetailVC = true
         }
     }
 
@@ -95,6 +115,14 @@ class ViewController: UIViewController {
         qiitaTagImageLoadingOperations.removeValue(forKey: indexPath)
     }
     
+    func cancelAllOperationLoadingTagImageIfNeed() {
+        qiitaTagImageLoadingOperationQueue.cancelAllOperations()
+        qiitaTagImageLoadingOperations.forEach { (key, qiitaTagImageLoadingOperation) in
+            qiitaTagImageLoadingOperation.cancel()
+        }
+        qiitaTagImageLoadingOperations = [:]
+    }
+    
     func footerViewStartAnimationIfNeed() {
         guard let footerView = self.footerLoadingView else {
             return
@@ -112,6 +140,14 @@ class ViewController: UIViewController {
     func reloadCollectionVIewLayoutAndData() {
         collectionView.collectionViewLayout.invalidateLayout()
         collectionView.reloadData()
+    }
+}
+
+extension ViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let tag = qiitaTagDataStore.tagAt(index: indexPath.item) else { return }
+        self.selectedQiitaTag = tag
+        performSegue(withIdentifier: "detailSegue", sender: self)
     }
 }
 

@@ -20,6 +20,7 @@
 		900EDD8A24AE2ED000F859BD /* QiitaTagCellCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900EDD8924AE2ED000F859BD /* QiitaTagCellCollectionViewCell.swift */; };
 		900EDD8C24B1770B00F859BD /* QiitaTagDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900EDD8B24B1770B00F859BD /* QiitaTagDataStore.swift */; };
 		900EDD8E24B6125600F859BD /* QiitaTagFooterCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900EDD8D24B6125600F859BD /* QiitaTagFooterCollectionReusableView.swift */; };
+		903ED9FB24BAF1890068ECBF /* QiitaTagDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903ED9FA24BAF1890068ECBF /* QiitaTagDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,7 @@
 		900EDD8924AE2ED000F859BD /* QiitaTagCellCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QiitaTagCellCollectionViewCell.swift; sourceTree = "<group>"; };
 		900EDD8B24B1770B00F859BD /* QiitaTagDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QiitaTagDataStore.swift; sourceTree = "<group>"; };
 		900EDD8D24B6125600F859BD /* QiitaTagFooterCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QiitaTagFooterCollectionReusableView.swift; sourceTree = "<group>"; };
+		903ED9FA24BAF1890068ECBF /* QiitaTagDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QiitaTagDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +121,7 @@
 				900EDD6224A8EEEF00F859BD /* Info.plist */,
 				900EDD8924AE2ED000F859BD /* QiitaTagCellCollectionViewCell.swift */,
 				900EDD8D24B6125600F859BD /* QiitaTagFooterCollectionReusableView.swift */,
+				903ED9FA24BAF1890068ECBF /* QiitaTagDetailViewController.swift */,
 			);
 			path = TimelineSample;
 			sourceTree = "<group>";
@@ -284,6 +287,7 @@
 			files = (
 				900EDD8524A8EF7200F859BD /* QiitaAPIClient.swift in Sources */,
 				900EDD5924A8EEEC00F859BD /* ViewController.swift in Sources */,
+				903ED9FB24BAF1890068ECBF /* QiitaTagDetailViewController.swift in Sources */,
 				900EDD8E24B6125600F859BD /* QiitaTagFooterCollectionReusableView.swift in Sources */,
 				900EDD8A24AE2ED000F859BD /* QiitaTagCellCollectionViewCell.swift in Sources */,
 				900EDD8C24B1770B00F859BD /* QiitaTagDataStore.swift in Sources */,

@@ -121,11 +121,83 @@
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="nZq-5V-dqu" id="piJ-iw-5Gg"/>
+                        <segue destination="myp-vE-7Cm" kind="show" identifier="detailSegue" id="efF-ZC-9L6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="573.60000000000002" y="44.527736131934034"/>
+        </scene>
+        <!--Qiita Tag Detail View Controller-->
+        <scene sceneID="dXD-gM-1iV">
+            <objects>
+                <viewController id="myp-vE-7Cm" customClass="QiitaTagDetailViewController" customModule="TimelineSample" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="duJ-hl-F0J">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xvb-x4-rdR">
+                                <rect key="frame" x="155.5" y="56" width="64" height="64"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="64" id="hnq-of-lif"/>
+                                    <constraint firstAttribute="height" constant="64" id="uyp-sP-MDT"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Qiitaのタグ名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uea-Gh-XMZ">
+                                <rect key="frame" x="16" y="128" width="343" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="DhF-cx-Tli"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="999999999" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rV3-nD-gNk">
+                                <rect key="frame" x="16" y="156" width="343" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="xje-mi-9AO"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="999999999" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T6m-VR-74h">
+                                <rect key="frame" x="16" y="184" width="343" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="KcQ-zI-rlY"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="T6m-VR-74h" firstAttribute="leading" secondItem="GUB-6C-0Om" secondAttribute="leading" constant="16" id="11S-S8-Pa7"/>
+                            <constraint firstItem="xvb-x4-rdR" firstAttribute="top" secondItem="GUB-6C-0Om" secondAttribute="top" constant="12" id="2s6-6R-OqK"/>
+                            <constraint firstItem="rV3-nD-gNk" firstAttribute="top" secondItem="Uea-Gh-XMZ" secondAttribute="bottom" constant="8" id="5ng-c2-WK2"/>
+                            <constraint firstItem="Uea-Gh-XMZ" firstAttribute="leading" secondItem="GUB-6C-0Om" secondAttribute="leading" constant="16" id="7FX-th-9F6"/>
+                            <constraint firstItem="GUB-6C-0Om" firstAttribute="trailing" secondItem="Uea-Gh-XMZ" secondAttribute="trailing" constant="16" id="9Dw-RL-Vfx"/>
+                            <constraint firstItem="rV3-nD-gNk" firstAttribute="leading" secondItem="GUB-6C-0Om" secondAttribute="leading" constant="16" id="Fmu-am-Anj"/>
+                            <constraint firstItem="GUB-6C-0Om" firstAttribute="trailing" secondItem="T6m-VR-74h" secondAttribute="trailing" constant="16" id="PeP-ki-yKZ"/>
+                            <constraint firstItem="Uea-Gh-XMZ" firstAttribute="top" secondItem="xvb-x4-rdR" secondAttribute="bottom" constant="8" id="RxA-k0-eZP"/>
+                            <constraint firstItem="GUB-6C-0Om" firstAttribute="trailing" secondItem="rV3-nD-gNk" secondAttribute="trailing" constant="16" id="W5J-WA-GEZ"/>
+                            <constraint firstItem="T6m-VR-74h" firstAttribute="top" secondItem="rV3-nD-gNk" secondAttribute="bottom" constant="8" id="iJ9-qq-30P"/>
+                            <constraint firstItem="xvb-x4-rdR" firstAttribute="centerX" secondItem="duJ-hl-F0J" secondAttribute="centerX" id="qHW-DT-iUZ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="GUB-6C-0Om"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="HDy-Tb-0bJ"/>
+                    <connections>
+                        <outlet property="followersLabel" destination="T6m-VR-74h" id="MMM-rk-DZX"/>
+                        <outlet property="iconImageView" destination="xvb-x4-rdR" id="bIq-oX-tfY"/>
+                        <outlet property="idLabel" destination="Uea-Gh-XMZ" id="CKp-sZ-t8v"/>
+                        <outlet property="itemsLabel" destination="rV3-nD-gNk" id="AIs-E5-ZpF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4lD-ix-ATi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1316" y="44.527736131934034"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="vaS-pX-kg0">
