@@ -141,6 +141,21 @@ class ViewController: UIViewController {
         collectionView.collectionViewLayout.invalidateLayout()
         collectionView.reloadData()
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        for index in 0..<collectionView.numberOfItems(inSection: 0) {
+            guard let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) else {
+                continue
+            }
+            let cellBounds = CollectionViewCellUtil.shared.calculateCellNowBounds(collectionView: collectionView,
+                                                                                  cell: cell)
+            if ViewInChecker.shared.isViewIn(rect: cellBounds, ratio: 0.5) == .viewIn {
+                cell.backgroundColor = UIColor.systemBackground
+            } else {
+                cell.backgroundColor = UIColor.red
+            }
+        }
+    }
 }
 
 extension ViewController: UICollectionViewDelegate {

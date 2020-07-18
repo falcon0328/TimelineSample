@@ -23,6 +23,7 @@ class QiitaTagCellCollectionViewCell: UICollectionViewCell {
         iconImageView.image = nil
         idLabel.text = nil
         followersLabel.text = nil
+        backgroundColor = UIColor.systemBackground
     }
     
     func updateBorderAppearance(borderWidth: CGFloat = 0.25, borderColor: CGColor = UIColor.tertiaryLabel.cgColor) {

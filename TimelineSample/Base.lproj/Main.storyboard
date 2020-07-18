@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Item-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="TimelineSample" customModuleProvider="target" sceneMemberID="viewController">
@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="nZq-5V-dqu">
-                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="574"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="e1L-mA-Nxp">
                                     <size key="itemSize" width="375" height="99"/>
@@ -71,7 +71,7 @@
                                                 <constraint firstItem="ihk-Oi-Dam" firstAttribute="top" secondItem="kFn-nO-J5i" secondAttribute="top" constant="34" id="op9-P0-VKI"/>
                                             </constraints>
                                         </collectionViewCellContentView>
-                                        <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <size key="customSize" width="375" height="88"/>
                                         <connections>
                                             <outlet property="followersLabel" destination="Mem-23-DOr" id="XY0-Gu-dmK"/>
@@ -112,6 +112,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="QjP-hk-1K1"/>
                     <navigationItem key="navigationItem" id="6S0-yu-oq4">
                         <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="Kjj-TB-8Io">
                             <connections>
@@ -126,7 +127,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="573.60000000000002" y="44.527736131934034"/>
+            <point key="canvasLocation" x="1322" y="45"/>
         </scene>
         <!--Qiita Tag Detail View Controller-->
         <scene sceneID="dXD-gM-1iV">
@@ -197,7 +198,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4lD-ix-ATi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1316" y="44.527736131934034"/>
+            <point key="canvasLocation" x="2038" y="45"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="vaS-pX-kg0">
@@ -210,12 +211,30 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="Ffj-no-k0Y"/>
+                        <segue destination="pNa-ck-lbL" kind="relationship" relationship="rootViewController" id="Ffj-no-k0Y"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mmq-UX-J9z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-178.40000000000001" y="45.42728635682159"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="IrQ-W4-maC">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="pNa-ck-lbL" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="BgO-AY-ra5"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="c5b-f6-K0A">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="6OD-TX-80q"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Gw0-sC-Y3B" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="573.60000000000002" y="44.527736131934034"/>
         </scene>
     </scenes>
 </document>
