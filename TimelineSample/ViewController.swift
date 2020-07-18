@@ -144,17 +144,31 @@ class ViewController: UIViewController {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         for index in 0..<collectionView.numberOfItems(inSection: 0) {
-            guard let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) else {
+            guard let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? QiitaTagCellCollectionViewCell else {
                 continue
             }
+            let edgeInsets = createEdgeInsetIfNeed()
             let cellBounds = CollectionViewCellUtil.shared.calculateCellNowBounds(collectionView: collectionView,
                                                                                   cell: cell)
-            if ViewInChecker.shared.isViewIn(rect: cellBounds, ratio: 0.5) == .viewIn {
-                cell.backgroundColor = UIColor.systemBackground
-            } else {
-                cell.backgroundColor = UIColor.red
-            }
+            let viewInStatus = ViewInChecker.shared.checkViewInStatus(rect: cellBounds, ratio: 0.5, edgeInsets: edgeInsets)
+            cell.updateAppearance(viewInStatus: viewInStatus)
         }
+    }
+    
+    func createEdgeInsetIfNeed() -> UIEdgeInsets {
+        var top: CGFloat = 0.0
+        var bottom: CGFloat = 0.0
+        if let statusBarManager = view.window?.windowScene?.statusBarManager {
+            top += statusBarManager.statusBarFrame.height
+        }
+        if let navigationBar = navigationController?.navigationBar {
+            top += navigationBar.frame.size.height
+        }
+        if let tabBar = tabBarController?.tabBar {
+            bottom += tabBar.frame.height
+        }
+        
+        return UIEdgeInsets(top: top, left: 0.0, bottom: bottom, right: 0.0)
     }
 }
 

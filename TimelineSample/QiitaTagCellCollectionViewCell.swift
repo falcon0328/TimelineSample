@@ -31,6 +31,14 @@ class QiitaTagCellCollectionViewCell: UICollectionViewCell {
         self.layer.borderColor = borderColor
     }
     
+    func updateAppearance(viewInStatus: ViewInStatus) {
+        if viewInStatus == .viewIn {
+            backgroundColor = UIColor.systemBackground
+        } else {
+            backgroundColor = UIColor.red
+        }
+    }
+    
     func updateAppearance(icon: UIImage?) {
         iconImageView.image = icon
     }

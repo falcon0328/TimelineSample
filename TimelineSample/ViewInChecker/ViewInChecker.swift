@@ -23,20 +23,20 @@ class ViewInChecker {
             .compactMap({$0}).first?.windows.filter({$0.isKeyWindow}).first
     }
     
-    func isViewIn(rect: CGRect, ratio: CGFloat) -> ViewInStatus {
-        let intersection = onWindowSize(rect: rect)
+    func checkViewInStatus(rect: CGRect, ratio: CGFloat, edgeInsets: UIEdgeInsets = .zero) -> ViewInStatus {
+        let intersection = onWindowSize(rect: rect, edgeInsets: edgeInsets)
         let intersectionArea = floor(intersection.width * intersection.height)
         let targetArea = floor(rect.width * rect.height)
         if intersectionArea < 0 || targetArea < 0 { return .viewOut }
         return intersectionArea >= (targetArea * ratio) ? .viewIn : .viewOut
     }
     
-    func onWindowSize(rect: CGRect) -> CGRect {
+    func onWindowSize(rect: CGRect, edgeInsets: UIEdgeInsets = .zero) -> CGRect {
         guard let currentWindow = currentWindow else { return .zero }
         let windowRect = CGRect(x: currentWindow.frame.origin.x,
                                 y: currentWindow.frame.origin.y,
-                                width: currentWindow.frame.width,
-                                height: currentWindow.frame.height - 64.0 - 49.0)
+                                width: currentWindow.frame.width - edgeInsets.left - edgeInsets.right,
+                                height: currentWindow.frame.height - edgeInsets.top - edgeInsets.bottom)
         
         let sx = max(rect.origin.x, windowRect.origin.x)
         let sy = max(rect.origin.y, windowRect.origin.y)
