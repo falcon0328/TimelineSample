@@ -41,10 +41,16 @@ class QiitaAPIClient {
                 return
             }
             guard let data = data,
-                let response = response as? HTTPURLResponse, response.statusCode >= 200 && response.statusCode < 300 else {
+                let response = response as? HTTPURLResponse else {
                     if let error = error {
                         sself.delegate?.qiitaAPIClient(sself, didInvalidReceiveTagWithError: error)
                     }
+                return
+            }
+            guard response.statusCode >= 200 && response.statusCode < 300 else {
+                sself.delegate?.qiitaAPIClient(sself, didInvalidReceiveTagWithError: NSError(domain: "",
+                                                                                             code: response.statusCode,
+                                                                                             userInfo: nil))
                 return
             }
             do {
