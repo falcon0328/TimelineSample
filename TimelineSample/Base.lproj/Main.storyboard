@@ -40,7 +40,7 @@
                                                         <constraint firstAttribute="width" constant="64" id="dqz-rM-nWm"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Qiitaのタグ名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ihk-Oi-Dam">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Qiitaのタグ名" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ihk-Oi-Dam">
                                                     <rect key="frame" x="80" y="34" width="200" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="xms-Q3-XB2"/>
@@ -225,6 +225,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="BgO-AY-ra5"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="c5b-f6-K0A">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
