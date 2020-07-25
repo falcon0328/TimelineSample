@@ -20,6 +20,8 @@
 		900EDD8A24AE2ED000F859BD /* QiitaTagCellCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900EDD8924AE2ED000F859BD /* QiitaTagCellCollectionViewCell.swift */; };
 		900EDD8C24B1770B00F859BD /* QiitaTagDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900EDD8B24B1770B00F859BD /* QiitaTagDataStore.swift */; };
 		900EDD8E24B6125600F859BD /* QiitaTagFooterCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900EDD8D24B6125600F859BD /* QiitaTagFooterCollectionReusableView.swift */; };
+		9037464224C876F700D7CF7F /* RandomStringGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9037464124C876F700D7CF7F /* RandomStringGenerator.swift */; };
+		9037464A24CAC3A100D7CF7F /* QiitaTagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9037464924CAC3A100D7CF7F /* QiitaTagCell.swift */; };
 		903ED9FB24BAF1890068ECBF /* QiitaTagDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903ED9FA24BAF1890068ECBF /* QiitaTagDetailViewController.swift */; };
 		90AE186524C31D6A0063CDEA /* CollectionViewCellUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90AE186424C31D6A0063CDEA /* CollectionViewCellUtil.swift */; };
 		90AE186724C31E8C0063CDEA /* ViewInChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90AE186624C31E8C0063CDEA /* ViewInChecker.swift */; };
@@ -62,6 +64,8 @@
 		900EDD8924AE2ED000F859BD /* QiitaTagCellCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QiitaTagCellCollectionViewCell.swift; sourceTree = "<group>"; };
 		900EDD8B24B1770B00F859BD /* QiitaTagDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QiitaTagDataStore.swift; sourceTree = "<group>"; };
 		900EDD8D24B6125600F859BD /* QiitaTagFooterCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QiitaTagFooterCollectionReusableView.swift; sourceTree = "<group>"; };
+		9037464124C876F700D7CF7F /* RandomStringGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomStringGenerator.swift; sourceTree = "<group>"; };
+		9037464924CAC3A100D7CF7F /* QiitaTagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QiitaTagCell.swift; sourceTree = "<group>"; };
 		903ED9FA24BAF1890068ECBF /* QiitaTagDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QiitaTagDetailViewController.swift; sourceTree = "<group>"; };
 		90AE186424C31D6A0063CDEA /* CollectionViewCellUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCellUtil.swift; sourceTree = "<group>"; };
 		90AE186624C31E8C0063CDEA /* ViewInChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewInChecker.swift; sourceTree = "<group>"; };
@@ -117,6 +121,7 @@
 			children = (
 				903ED9FC24BDF09D0068ECBF /* ViewInChecker */,
 				900EDD8624A8EF7600F859BD /* APIClient */,
+				9037464124C876F700D7CF7F /* RandomStringGenerator.swift */,
 				900EDD5424A8EEEC00F859BD /* AppDelegate.swift */,
 				900EDD5624A8EEEC00F859BD /* SceneDelegate.swift */,
 				900EDD5824A8EEEC00F859BD /* ViewController.swift */,
@@ -128,6 +133,7 @@
 				900EDD8924AE2ED000F859BD /* QiitaTagCellCollectionViewCell.swift */,
 				900EDD8D24B6125600F859BD /* QiitaTagFooterCollectionReusableView.swift */,
 				903ED9FA24BAF1890068ECBF /* QiitaTagDetailViewController.swift */,
+				9037464924CAC3A100D7CF7F /* QiitaTagCell.swift */,
 			);
 			path = TimelineSample;
 			sourceTree = "<group>";
@@ -299,11 +305,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9037464A24CAC3A100D7CF7F /* QiitaTagCell.swift in Sources */,
 				900EDD8524A8EF7200F859BD /* QiitaAPIClient.swift in Sources */,
 				900EDD5924A8EEEC00F859BD /* ViewController.swift in Sources */,
 				90AE186524C31D6A0063CDEA /* CollectionViewCellUtil.swift in Sources */,
 				903ED9FB24BAF1890068ECBF /* QiitaTagDetailViewController.swift in Sources */,
 				900EDD8E24B6125600F859BD /* QiitaTagFooterCollectionReusableView.swift in Sources */,
+				9037464224C876F700D7CF7F /* RandomStringGenerator.swift in Sources */,
 				900EDD8A24AE2ED000F859BD /* QiitaTagCellCollectionViewCell.swift in Sources */,
 				900EDD8C24B1770B00F859BD /* QiitaTagDataStore.swift in Sources */,
 				900EDD8824A8EFA700F859BD /* QiitaTag.swift in Sources */,

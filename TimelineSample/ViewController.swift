@@ -28,11 +28,13 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         qiitaTagDataStore.delegate = self
+        collectionView.register(QiitaTagCell.self, forCellWithReuseIdentifier: ViewController.tagCellIdentifier)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.prefetchDataSource = self
         collectionView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refresh(sender:)), for: .valueChanged)
+        reloadCollectionViewLayout()
         fetchQiitaTags()
     }
     
@@ -53,14 +55,13 @@ class ViewController: UIViewController {
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        reloadCollectionViewLayout()
         super.viewWillTransition(to: size, with: coordinator)
-        reloadCollectionVIewLayoutAndData()
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            reloadCollectionVIewLayoutAndData()
-        }
+        reloadCollectionViewLayout()
+        super.traitCollectionDidChange(previousTraitCollection)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -137,14 +138,17 @@ class ViewController: UIViewController {
         footerView.activityIndicator.stopAnimating()
     }
     
-    func reloadCollectionVIewLayoutAndData() {
+    func reloadCollectionViewLayout() {
         collectionView.collectionViewLayout.invalidateLayout()
+        if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            flowLayout.estimatedItemSize = CGSize(width: view.bounds.size.width, height: view.bounds.height)
+        }
         collectionView.reloadData()
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         for index in 0..<collectionView.numberOfItems(inSection: 0) {
-            guard let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? QiitaTagCellCollectionViewCell else {
+            guard let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? QiitaTagCell else {
                 continue
             }
             let edgeInsets = createEdgeInsetIfNeed()
@@ -181,12 +185,6 @@ extension ViewController: UICollectionViewDelegate {
 }
 
 extension ViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.size.width, height: ViewController.cellHeight)
-    }
-    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForFooterInSection section: Int) -> CGSize {
@@ -230,7 +228,7 @@ extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let tag = qiitaTagDataStore.tagAt(index: indexPath.item),
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ViewController.tagCellIdentifier,
-                                                            for: indexPath) as? QiitaTagCellCollectionViewCell else {
+                                                            for: indexPath) as? QiitaTagCell else {
             return UICollectionViewCell()
         }
 
@@ -239,7 +237,9 @@ extension ViewController: UICollectionViewDataSource {
         cell.selectedBackgroundView = selectedBackgroundView
     
         cell.updateBorderAppearance()
-        cell.updateAppearance(indexPath: indexPath, id: tag.id, followers: "\(tag.followers_count)", icon: nil)
+        // セルの高さが動的に変更することを確認するために改行をランダムに3 ~ 10行挿入する形にしている
+        let text = tag.id + RandomStringGenerator.shared.generate(length: Int.random(in: 3..<10))
+        cell.updateAppearance(indexPath: indexPath, id: text, icon: nil)
         startOperationLoadingTagImageIfNeed(indexPath: indexPath) { (image, error) in
             DispatchQueue.main.async { [weak self] in
                 guard let self = self, let image = image else { return }
@@ -257,7 +257,7 @@ extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         willDisplay cell: UICollectionViewCell,
                         forItemAt indexPath: IndexPath) {
-        guard let cell = cell as? QiitaTagCellCollectionViewCell else { return }
+        guard let cell = cell as? QiitaTagCell else { return }
         startOperationLoadingTagImageIfNeed(indexPath: indexPath) { (image, error) in
             DispatchQueue.main.async { [weak self] in
                 guard let self = self, let image = image else { return }
