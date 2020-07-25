@@ -1,2 +1,2 @@
 # TimelineSample
-iOSのタイムラインのサンプル（PrefetchData、PullToRefresh、FooterLoading、ViewInCheck）
+iOSのタイムラインのサンプル（PrefetchData、PullToRefresh、FooterLoading、ViewInCheck、Dynamic height）
